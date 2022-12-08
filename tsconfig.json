@@ -10,20 +10,22 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "lib": ["DOM", "DOM.Iterable", "ESNEXT"],
-    "module": "ESNEXT",
+    "module": "CommonJS",
     "moduleResolution": "Node",
-    "noEmit": true,
+    "noEmit": false,
     "noFallthroughCasesInSwitch": true,
-    "tsBuildInfoFile": "./build-cache",
     "noImplicitAny": false,
     "noImplicitReturns": true,
+    "outDir": "build",
     "resolveJsonModule": true,
+    "rootDir": "source",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES5"
+    "target": "ES6",
+    "tsBuildInfoFile": "./build-cache"
   },
-  "include": ["source"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["source"]
 }

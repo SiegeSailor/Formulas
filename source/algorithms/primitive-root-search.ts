@@ -1,4 +1,4 @@
-import fastExponential from "algorithms/fast-exponential";
+import fastExponential from "./fast-exponential";
 
 function _(prime: number) {
   const phi = prime - 1;
@@ -22,5 +22,9 @@ function _(prime: number) {
 
   return arrayOfResult;
 }
+
+_(131).forEach((result) => {
+  if (result != -1) console.log(result);
+});
 
 export default _;

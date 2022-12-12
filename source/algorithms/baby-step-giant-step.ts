@@ -1,4 +1,4 @@
-import fastExponential from "algorithms/fast-exponential";
+import fastExponential from "./fast-exponential";
 
 function _(base: number, congruent: number, modular: number) {
   const numberOfSteps = Math.ceil(Math.sqrt(modular));

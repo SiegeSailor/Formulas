@@ -44,34 +44,8 @@ const M = p * q; //update M
 var x0 = 53; //p = 7, q = 19, x0 = 53; 	(53, 16, 123, 100, 25...)
 var x = x0; //x0 as start nubmer, seed.
 
-var n = 1; //Just to display n in console
-//generate numbers. See this in console.log(F12 button)
-console.log(
-  "next(4 numbers): " + //16 123 100 25 ...
-    "\n" +
-    n++ +
-    " = " +
-    next() +
-    "\n" +
-    n++ +
-    " = " +
-    next() +
-    "\n" +
-    n++ +
-    " = " +
-    next() +
-    "\n" +
-    n++ +
-    " = " +
-    next() +
-    "\n..."
-);
+function _() {
+  return next();
+}
 
-var n = 3; //show n-th number
-console.log(
-  //'lcm(p-1, q-1) = ', lcm([(p-1), (q-1)]),	//test lcm = 18, true
-  "\n" + n + "-th number = ",
-  generate(n) //return 25 and this is 4-th number.
-);
-
-export {};
+export default _;

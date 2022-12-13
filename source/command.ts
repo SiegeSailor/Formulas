@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
-console.log("COMMAND");
+import inquirer from "inquirer";
 
-export = {};
+import RSA from "./RSA";
+import ElGamal from "./ElGamal";
+
+RSA();
+ElGamal();
+
+export default {};

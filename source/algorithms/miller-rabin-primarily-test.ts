@@ -79,7 +79,8 @@ function isPrime(n, k) {
 // Number of iterations
 let k = 4;
 
-console.log("All primes smaller than 100: <br>");
-for (let n = 1; n < 100; n++) if (isPrime(n, k)) console.log(n.toString(), " ");
+// console.log("All primes smaller than 100: <br>");
+// for (let n = 1; n < 100; n++) if (isPrime(n, k)) console.log(n.toString(), " ");
+console.log(isPrime(7984925229121, 4));
 
-export {};
+export { isPrime };

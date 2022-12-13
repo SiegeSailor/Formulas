@@ -56,7 +56,7 @@ function pollard(n) {
 }
 
 // Driver code
-let n = 1403;
+let n = 41399374705903;
 
 // temporarily storing n
 let num = n;

@@ -2,26 +2,19 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import nanospinner from "nanospinner";
 
-enum EName {
-  Purpose = "Purpose",
-}
-
-enum EChoices {
-  Demonstrate = "Demonstrate a cryptography procedure",
-  Execute = "Execute individual algorithm",
-}
+import { ENames, EChoices } from "./constants";
 
 function main() {
   inquirer
     .prompt([
       {
         type: "list",
-        name: EName.Purpose,
+        name: ENames.Purpose,
         message: "What do you want to do?",
         choices: [{ name: EChoices.Demonstrate }, { name: EChoices.Execute }],
       },
     ])
-    .then(({ [EName.Purpose]: purpose }) => {
+    .then(({ [ENames.Purpose]: purpose }) => {
       switch (purpose) {
         case EChoices.Demonstrate:
           break;

@@ -1,7 +1,8 @@
 import { _ as euclidean } from "./index";
 
-describe("euclidean", () => {
+describe("Finding the Greatest Common Divisor of the given numbers", () => {
   test.each([
+    [2, 4, 2],
     [816, 2260, 4],
     [30513, 40242, 3],
     [614, 513, 1],

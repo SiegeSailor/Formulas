@@ -1,3 +1,5 @@
+import inquirer from "inquirer";
+
 export function _(base: number, exponent: number, modulo: number) {
   const recursion = (
     base: number,
@@ -13,4 +15,14 @@ export function _(base: number, exponent: number, modulo: number) {
   };
 
   return recursion(base, exponent, 1, modulo);
+}
+
+export function prompt() {
+  inquirer.prompt([
+    {
+      type: "number",
+      name: "left",
+      message: "",
+    },
+  ]);
 }

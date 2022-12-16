@@ -8,6 +8,6 @@ describe("Finding the Greatest Common Divisor of the given numbers", () => {
     [614, 513, 1],
     [5102048903, 307803219, 1],
   ])("GCD(%p, %p) = %p", (left, right, result) => {
-    expect(euclidean(left, right)).toEqual(result);
+    expect(euclidean(BigInt(left), BigInt(right))).toEqual(BigInt(result));
   });
 });

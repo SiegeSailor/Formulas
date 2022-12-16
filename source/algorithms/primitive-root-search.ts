@@ -1,4 +1,4 @@
-import { _ as fastExponentiation } from "./fast-exponentiation";
+import { _ as fastModularExponentiation } from "./fast-modular-exponentiation";
 
 function _(prime: number) {
   const phi = prime - 1;
@@ -10,7 +10,11 @@ function _(prime: number) {
     const set: { [key: number]: boolean } = {};
     let isPrimitiveRoot = false;
     for (let indexColumn = 0; indexColumn < table[0].length; indexColumn++) {
-      const exponent = fastExponentiation(indexRow + 1, indexColumn + 1, prime);
+      const exponent = fastModularExponentiation(
+        indexRow + 1,
+        indexColumn + 1,
+        prime
+      );
       table[indexRow][indexColumn] = exponent;
 
       if (set[exponent]) isPrimitiveRoot = false;

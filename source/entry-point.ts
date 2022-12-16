@@ -1,1 +1,1 @@
-export { default as euclidean } from "algorithms/euclidean";
+export { _ as euclidean } from "./algorithms/euclidean";

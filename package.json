@@ -1,38 +1,44 @@
 {
-  "name": "formulas",
-  "version": "1.0.0",
-  "description": "Provide a collection of formula functions and a command line tool.",
-  "main": "./build/source/entry-point.js",
+  "author": "SiegeSailor",
   "bin": "./build/command.js",
-  "files": [
-    "./build/**/*"
-  ],
+  "bugs": {
+    "url": "https://github.com/SiegeSailor/formulas/issues"
+  },
   "dependencies": {
-    "inquirer": "9.1.4",
+    "chalk": "5.2.0",
+    "inquirer": "8.0.0",
+    "nanospinner": "1.1.0",
     "ts-node": "10.9.1",
     "typescript": "4.9.3"
   },
+  "description": "Provide a collection of formula functions and a command line tool.",
   "devDependencies": {
-    "@types/inquirer": "^9.0.3",
+    "@types/inquirer": "9.0.3",
     "@types/node": "18.11.11"
   },
-  "scripts": {
-    "build": "tsc",
-    "start": "ts-node ./source/command.ts"
+  "engines": {
+    "node": ">= 16.0.0",
+    "npm": ">= 8.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SiegeSailor/formulas.git"
-  },
+  "files": [
+    "./build/**/*"
+  ],
+  "homepage": "https://github.com/SiegeSailor/formulas#readme",
   "keywords": [
     "typescript",
     "command-line-tool",
     "package"
   ],
-  "author": "SiegeSailor",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SiegeSailor/formulas/issues"
+  "main": "./build/source/entry-point.js",
+  "name": "formulas",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiegeSailor/formulas.git"
   },
-  "homepage": "https://github.com/SiegeSailor/formulas#readme"
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node ./source/command.ts"
+  },
+  "version": "1.0.0"
 }

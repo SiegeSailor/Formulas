@@ -1,11 +1,8 @@
-#!/usr/bin/env node
-
+import chalk from "chalk";
+import nanospinner from "nanospinner";
 import inquirer from "inquirer";
 
-import RSA from "./RSA";
-import ElGamal from "./ElGamal";
+import RSA from "./illustration/RSA";
+import ElGamal from "./illustration/ElGamal";
 
-RSA();
-ElGamal();
-
-export default {};
+inquirer.prompt([{ type: "list", choices: ["A", "B"] }]);

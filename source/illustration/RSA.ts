@@ -1,5 +1,5 @@
-import blumBlumShubPseudoRandomNumberGenerator from "./algorithms/blum-blum-shub-pseudo-random-number-generator";
-import { isPrime } from "./algorithms/miller-rabin-primarily-test";
+import blumBlumShubPseudoRandomNumberGenerator from "../algorithms/blum-blum-shub-pseudo-random-number-generator";
+import { isPrime } from "../algorithms/miller-rabin-primarily-test";
 
 const ALICE = "Alice",
   Bob = "Bob",

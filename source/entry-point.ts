@@ -3,4 +3,6 @@ export { _ as blumBlumShub } from "./algorithms/blum-blum-shub";
 export { _ as euclidean } from "./algorithms/euclidean";
 export { _ as fastModularExponentiation } from "./algorithms/fast-modular-exponentiation";
 export { _ as millerRabinPrimarilyTest } from "./algorithms/miller-rabin-primarily-test";
+export { _ as multiplicativeInverse } from "./algorithms/multiplicative-inverse";
 export { _ as pollardP1Factorization } from "./algorithms/pollard-p-1-factorization";
+export { _ as primitiveRootSearch } from "./algorithms/primitive-root-search";

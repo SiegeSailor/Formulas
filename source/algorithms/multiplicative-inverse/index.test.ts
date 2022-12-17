@@ -4,16 +4,16 @@ import { _ as multiplicativeInverse } from "./index";
 
 describe("Finding the Multiplicative Inverses of the given numbers", () => {
   test.each([
-    [87, 131, [128, 256, 384, 512, 640]],
-    [23, 41, [25, 50, 75, 100, 125]],
-    [11, 13, [6, 12, 18, 24, 30]],
-    [2, 7, [4, 8, 12, 16, 20]],
-    [1011, 913, [736, 1472, 2208, 2944, 3680]],
+    { base: 87, modulo: 131, result: [128, 256, 384, 512, 640] },
+    { base: 23, modulo: 41, result: [25, 50, 75, 100, 125] },
+    { base: 11, modulo: 13, result: [6, 12, 18, 24, 30] },
+    { base: 2, modulo: 7, result: [4, 8, 12, 16, 20] },
+    { base: 1011, modulo: 913, result: [736, 1472, 2208, 2944, 3680] },
   ])(
-    `%p has some multiplicative inverses with modulo %p.\n\tmultiplicative inverses = ${chalk.greenBright(
-      "%p"
+    `y is the multiplicative inverse of $base $ $modulo ($base * y % $modulo = 1)\n\ty = ${chalk.greenBright(
+      "$result"
     )}`,
-    (base, modulo, result) => {
+    ({ base, modulo, result }) => {
       expect(
         multiplicativeInverse(BigInt(base), BigInt(modulo), 5).sort()
       ).toEqual(

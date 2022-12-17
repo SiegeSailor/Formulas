@@ -1,6 +1,7 @@
 import chalk from "chalk";
 
 import {
+  babyStepGiantStep,
   blumBlumShub,
   fastModularExponentiation,
   millerRabinPrimarilyTest,
@@ -53,8 +54,8 @@ function decrypt(
     .join("");
 }
 
-function findPrivateKey(e: bigint, arrayOfEncryptedCode: bigint[]) {
-  return 1n;
+function findPrivateKey(e: bigint, n: bigint) {
+  return babyStepGiantStep(n, 1n, e);
 }
 
 async function _() {
@@ -113,7 +114,7 @@ async function _() {
         message
       )} as the secret message:`,
       () => {
-        console.log(`\tNow ${EActors.Alice} have the following numbers:`);
+        console.log(`\tNow ${EActors.Alice} has the following numbers:`);
         logList([
           { name: "P", value: p },
           { name: "Q", value: q },
@@ -157,7 +158,7 @@ async function _() {
     await inquireConfirm(
       `${EActors.Eve} is going to decrypt the secret message.`,
       () => {
-        console.log(`\tNow ${EActors.Eve} have the following stuff:`);
+        console.log(`\tNow ${EActors.Eve} has the following stuff:`);
         logList([
           { name: "n", value: n },
           { name: "e", value: e },
@@ -171,7 +172,7 @@ async function _() {
             "(e, n)"
           )} and other information.`
         );
-        const d = findPrivateKey(BigInt(e), arrayOfEncryptedCode);
+        const d = findPrivateKey(BigInt(e), n);
         console.log(
           `\tPrivate Key ${chalk.bgCyan("(d, n)")}: ${chalk.gray(
             `(${d}, ${n})`

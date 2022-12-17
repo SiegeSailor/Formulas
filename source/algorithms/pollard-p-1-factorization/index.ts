@@ -16,7 +16,8 @@ export function _(input: bigint) {
     return BigInt(-1);
   };
 
-  if (millerRabinPrimarilyTest(input, 10)) return [];
+  if (millerRabinPrimarilyTest(input, 10))
+    throw new Error(`${input} is prime.`);
 
   let cache = input;
   const arrayOfPrimeFactor: number[] = [];

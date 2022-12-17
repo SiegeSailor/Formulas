@@ -44,7 +44,7 @@
   },
   "scripts": {
     "build": "npm run test && tsc",
-    "start": "ts-node ./source/command.ts",
+    "start": "clear && ts-node ./source/command.ts",
     "test": "jest",
     "postinstall": "npx patch-package"
   },

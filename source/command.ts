@@ -29,16 +29,19 @@ function demonstrate() {
         join(process.cwd(), `source/illustration/${demonstrate}`)
       );
       call.default();
+    })
+    .catch((error) => {
+      throw error;
     });
 }
 
-function main() {
+function main(message: string) {
   inquirer
     .prompt([
       {
         type: "list",
         name: ENames.Purpose,
-        message: "What do you want to do?",
+        message,
         choices: [{ name: EChoices.Demonstrate }, { name: EChoices.Execute }],
       },
     ])
@@ -56,7 +59,8 @@ function main() {
     })
     .catch((error) => {
       console.error(chalk.red(error.message));
+      main("Unexpected result. Please restart your flow.");
     });
 }
 
-main();
+main("What do you want to do?");

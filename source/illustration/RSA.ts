@@ -1,10 +1,13 @@
 import chalk from "chalk";
-import inquirer from "inquirer";
-import nanospinner from "nanospinner";
 
-import { blumBlumShub, millerRabinPrimarilyTest } from "../entry-point";
+import {
+  blumBlumShub,
+  fastModularExponentiation,
+  millerRabinPrimarilyTest,
+  pollardP1Factorization,
+} from "../entry-point";
 import { EActors } from "../common/constants";
-import { inquireConfirm } from "../common/utilities";
+import { logHighlight, logList, inquireConfirm } from "../common/utilities";
 
 function obtainPQ(bits: number, level: number) {
   const arrayOfPrime: bigint[] = [];
@@ -30,54 +33,119 @@ function obtainCandidates(r: bigint) {
   return arrayOfCandidate;
 }
 
+function encrypt(message: string, exponent: bigint, modulo: bigint) {
+  return message.split("").map((character) => {
+    const code = character.charCodeAt(0);
+    return fastModularExponentiation(BigInt(code), exponent, modulo);
+  });
+}
+
+function decrypt(
+  arrayOfEncryptedCode: bigint[],
+  exponent: bigint,
+  modulo: bigint
+) {
+  return arrayOfEncryptedCode
+    .map((codeEncrypted) => {
+      const code = fastModularExponentiation(codeEncrypted, exponent, modulo);
+      return String.fromCharCode(Number(code));
+    })
+    .join("");
+}
+
 async function _() {
-  console.log("== Demonstrating RSA Encryption ==");
-  console.log("There are three people in this RSA encryption process:");
-  console.log(`\t${EActors.Alice}\n\t${EActors.Bob}\n\t${EActors.Eve}\n`);
+  try {
+    logHighlight("=== Demonstrating RSA Encryption ===");
+    console.log("There are three people in this RSA encryption process:");
+    console.log(
+      `\t${EActors.Alice} - Receiver\n\t${EActors.Bob} - Sender\n\t${EActors.Eve} - Eavesdropper`
+    );
 
-  const r = await inquireConfirm(
-    `${EActors.Alice} is going to pick up prime numbers P and Q:`,
-    () => {
-      const bits = 10,
-        level = 5;
-      const spinner = nanospinner
-        .createSpinner(
-          chalk.cyan(
-            `Obtaining ${bits}-bit prime numbers at random level ${level}`
-          )
-        )
-        .start({ color: "cyan" });
-      const [p, q] = obtainPQ(bits, level);
-      spinner.success({ text: chalk.cyan("Done") });
+    const [p, q, n, r] = await inquireConfirm(
+      `${EActors.Alice} is going to pick up prime numbers P and Q:`,
+      () => {
+        const bits = 10,
+          level = 5;
+        const [p, q] = obtainPQ(bits, level);
 
-      const n = p * q;
-      const r = (p - BigInt(1)) * (q - BigInt(1));
-      console.table(
-        [
+        const n = p * q;
+        const r = (p - BigInt(1)) * (q - BigInt(1));
+        logList([
           { name: "P", value: p },
           { name: "Q", value: q },
           { name: "n", value: n },
           { name: "r", value: r },
-        ],
-        ["name", "value"]
-      );
+        ]);
 
-      return r;
-    }
-  );
+        return [p, q, n, r];
+      }
+    );
 
-  inquireConfirm(
-    `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
-    () => {
-      const arrayOfCandidate = obtainCandidates(r);
-      console.table(
-        arrayOfCandidate.map((candidate) => {
-          return { value: candidate };
-        }),
-        ["value"]
-      );
-    }
-  );
+    const arrayOfCandidate = await inquireConfirm(
+      `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
+      () => {
+        const arrayOfCandidate = obtainCandidates(r);
+        arrayOfCandidate.forEach((candidate) => {
+          console.log(`\t${candidate}`);
+        });
+
+        return arrayOfCandidate;
+      }
+    );
+
+    const [e, d] = await inquireConfirm(
+      `${EActors.Alice} selects the first value from the list as K to compute e and d`,
+      () => {
+        const arrayOfPrimeFactor = pollardP1Factorization(arrayOfCandidate[0]);
+        console.log(`\tK has factors: ${arrayOfPrimeFactor}}`);
+
+        return arrayOfPrimeFactor;
+      }
+    );
+
+    const message = "This is a hardcoded secret message.";
+    await inquireConfirm(
+      `${EActors.Alice} chooses ${chalk.bgGray(
+        message
+      )} as the secret message.`,
+      () => {
+        console.log(`\tNow ${EActors.Alice} have the following numbers:`);
+        logList([
+          { name: "P", value: p },
+          { name: "Q", value: q },
+          { name: "n", value: n },
+          { name: "r", value: r },
+          { name: "e", value: e },
+          { name: "d", value: d },
+        ]);
+        console.log(
+          `\n\t${EActors.Alice} send e as the public key to ${EActors.Bob} and ${EActors.Eve}.`
+        );
+
+        const arrayOfEncryptedCode = encrypt(message, BigInt(e), n);
+        console.log(
+          `\n\t${EActors.Bob} encrypts the message and send it back to ${
+            EActors.Alice
+          } (while ${
+            EActors.Eve
+          } is eavesdropping).\n\tEncrypted message: ${chalk.gray(
+            arrayOfEncryptedCode
+          )}`
+        );
+
+        const messageDecrypted = decrypt(arrayOfEncryptedCode, BigInt(d), n);
+        console.log(
+          `\n\t${
+            EActors.Alice
+          } decrypts it since she has the needed keys.\n\tDecrypted message: ${chalk.gray(
+            messageDecrypted
+          )}`
+        );
+      }
+    );
+  } catch (error) {
+    throw error;
+  }
 }
 
 export default _;

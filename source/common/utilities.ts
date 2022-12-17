@@ -1,12 +1,23 @@
 import inquirer from "inquirer";
+import chalk from "chalk";
 import type { KeyDescriptor } from "inquirer-press-to-continue";
+
+export function logHighlight(input: string) {
+  console.log("\n" + chalk.bold.cyan(input));
+}
+
+export function logList(listOfItem: { name: string; value: any }[]) {
+  listOfItem.forEach(({ name, value }) => {
+    console.log(`\t${name}: ${value}`);
+  });
+}
 
 export async function inquireConfirm<T>(
   title: string,
   callback: () => T
 ): Promise<T> {
   try {
-    console.log(title);
+    logHighlight(title);
     await inquirer.prompt<{ key: KeyDescriptor }>({
       type: "press-to-continue",
       name: "_",

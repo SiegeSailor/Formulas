@@ -6,6 +6,7 @@ export enum ENames {
 export enum EChoices {
   Demonstrate = "Demonstrate a cryptography procedure",
   Execute = "Execute individual algorithm",
+  Exit = "Exit",
 }
 
 export enum ESymbols {

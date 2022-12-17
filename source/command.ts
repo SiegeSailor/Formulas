@@ -8,6 +8,10 @@ import { ENames, EChoices } from "./common/constants";
 
 inquirer.registerPrompt("press-to-continue", PressToContinuePrompt);
 
+function exit() {
+  console.log(chalk.gray("Successfully terminated the program."));
+}
+
 function execute() {
   throw new Error("This feature is not ready yet.");
 }
@@ -35,29 +39,36 @@ async function demonstrate() {
   }
 }
 
-async function main(message: string) {
+async function main(message = "What do you want to do?") {
   return inquirer
     .prompt([
       {
         type: "list",
         name: ENames.Purpose,
         message,
-        choices: [{ name: EChoices.Demonstrate }, { name: EChoices.Execute }],
+        choices: [
+          { name: EChoices.Demonstrate },
+          { name: EChoices.Execute },
+          { name: EChoices.Exit },
+        ],
       },
     ])
     .then(async ({ [ENames.Purpose]: purpose }) => {
       switch (purpose) {
         case EChoices.Demonstrate:
           await demonstrate();
+          main();
           break;
         case EChoices.Execute:
           execute();
+          main();
+          break;
+        case EChoices.Exit:
+          exit();
           break;
         default:
           throw new Error("Something wrong with the prompt flow.");
       }
-
-      main("What do you want to do?");
     })
     .catch((_) => {
       const error: Error = _;
@@ -66,4 +77,4 @@ async function main(message: string) {
     });
 }
 
-main("What do you want to do?");
+main();

@@ -1,6 +1,6 @@
-export function _(left: number, right: number) {
-  const recursion = (left: number, right: number) => {
-    if (right == 0) return [left, 1, 0];
+export function _(left: bigint, right: bigint) {
+  const recursion = (left: bigint, right: bigint) => {
+    if (right == BigInt(0)) return [left, BigInt(1), BigInt(0)];
 
     const arrayOfResult = _(right, left % right);
     return [

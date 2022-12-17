@@ -11,6 +11,8 @@ async function _() {
       `\t${EActors.Alice} - Receiver\n\t${EActors.Bob} - Sender\n\t${EActors.Eve} - Eavesdropper`
     );
 
+    await inquire.confirm(``, () => {});
+
     log.highlight("=== End of ElGamal Encryption ===");
   } catch (error) {
     throw error;

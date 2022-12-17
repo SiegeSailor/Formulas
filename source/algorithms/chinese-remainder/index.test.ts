@@ -10,7 +10,7 @@ describe("Finding a number by the product of different remainders", () => {
     [[128, 87, 921], [13, 17, 127], 14129],
     [[981237, 1238891], [218, 12839], 1469993],
   ])(
-    `%p as integers and %p as modulo\n\tnumber is %p`,
+    `%p as integers and %p as modulo\n\tnumber is ${chalk.greenBright("%p")}`,
     (arrayOfBase, arrayOfModulo, result) => {
       expect(chineseRemainder(arrayOfBase, arrayOfModulo)).toEqual(result);
     }

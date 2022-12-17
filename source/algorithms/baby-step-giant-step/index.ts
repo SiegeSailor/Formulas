@@ -31,5 +31,5 @@ export function _(generator: bigint, base: bigint, modulo: bigint) {
     }
   }
 
-  return -1;
+  return BigInt(-1);
 }

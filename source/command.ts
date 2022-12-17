@@ -10,9 +10,9 @@ inquirer.registerPrompt("press-to-continue", PressToContinuePrompt);
 
 function execute() {}
 
-function demonstrate() {
-  inquirer
-    .prompt([
+async function demonstrate() {
+  try {
+    const { [ENames.Demonstrate]: demonstrate } = await inquirer.prompt([
       {
         type: "list",
         name: ENames.Demonstrate,
@@ -23,20 +23,18 @@ function demonstrate() {
           }
         ),
       },
-    ])
-    .then(async ({ [ENames.Demonstrate]: demonstrate }) => {
-      const call = await import(
-        join(process.cwd(), `source/illustration/${demonstrate}`)
-      );
-      call.default();
-    })
-    .catch((error) => {
-      throw error;
-    });
+    ]);
+    const call = await import(
+      join(process.cwd(), `source/illustration/${demonstrate}`)
+    );
+    await call.default();
+  } catch (error) {
+    throw error;
+  }
 }
 
-function main(message: string) {
-  inquirer
+async function main(message: string) {
+  return inquirer
     .prompt([
       {
         type: "list",
@@ -45,10 +43,10 @@ function main(message: string) {
         choices: [{ name: EChoices.Demonstrate }, { name: EChoices.Execute }],
       },
     ])
-    .then(({ [ENames.Purpose]: purpose }) => {
+    .then(async ({ [ENames.Purpose]: purpose }) => {
       switch (purpose) {
         case EChoices.Demonstrate:
-          demonstrate();
+          await demonstrate();
           break;
         case EChoices.Execute:
           execute();

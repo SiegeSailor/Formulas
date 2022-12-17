@@ -58,7 +58,11 @@ async function main(message: string) {
       }
     })
     .catch((error) => {
-      console.error("\t" + chalk.red(error.message));
+      console.error(
+        `\t${chalk.red(`${error.name}: ${error.message}`)}\n\t${chalk.gray(
+          error.cause
+        )}`
+      );
       main("Unexpected result. Please restart your flow.");
     });
 }

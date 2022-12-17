@@ -8,7 +8,7 @@ export const log = {
   },
   list: (listOfItem: { name: string; value: any }[]) => {
     listOfItem.forEach(({ name, value }) => {
-      console.log(`\t${name}: ${value}`);
+      console.log(`\t${name}: ${chalk.gray(value)}`);
     });
   },
 };

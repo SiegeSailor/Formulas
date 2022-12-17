@@ -90,26 +90,30 @@ async function _() {
       `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
       () => {
         const arrayOfCandidate = obtainCandidates(r);
-        arrayOfCandidate.forEach((candidate) => {
-          console.log(`\t${candidate}`);
-        });
+        log.list(
+          arrayOfCandidate.map((candidate, index) => {
+            return { name: String(index + 1), value: candidate };
+          })
+        );
 
         return arrayOfCandidate;
       }
     );
 
     const [e, d] = await inquire.confirm(
-      `${EActors.Alice} selects the first value from the list as K to compute e and d:`,
+      `${EActors.Alice} selects the first value from the list to compute e and d:`,
       () => {
         const arrayOfPrimeFactor = pollardP1Factorization(arrayOfCandidate[0]);
-        console.log(`\tK has factors: ${arrayOfPrimeFactor}}`);
+        console.log(
+          `\t${arrayOfCandidate[0]} has factors: ${arrayOfPrimeFactor}`
+        );
 
         return arrayOfPrimeFactor;
       }
     );
 
     const message = "This is a hardcoded secret message.";
-    const arrayOfEncryptedCode = await inquire.confirm(
+    await inquire.confirm(
       `${EActors.Alice} chooses ${chalk.bgGray(
         message
       )} as the secret message:`,
@@ -124,27 +128,24 @@ async function _() {
           { name: "d", value: d },
         ]);
         console.log(
-          `\n\t${EActors.Alice} sends ${chalk.bgCyan(
+          `\n\t${EActors.Alice} sends ${chalk.bold.bgCyan(
             "(e, n)"
           )} as the public key to ${EActors.Bob} and ${EActors.Eve}.`
         );
+      }
+    );
 
+    const arrayOfEncryptedCode = await inquire.confirm(
+      `${EActors.Bob} encrypts the message and sends it back to ${EActors.Alice} (while ${EActors.Eve} is eavesdropping).`,
+      () => {
         const arrayOfEncryptedCode = encrypt(message, BigInt(e), n);
-        console.log(
-          `\n\t${EActors.Bob} encrypts the message and sends it back to ${
-            EActors.Alice
-          } (while ${
-            EActors.Eve
-          } is eavesdropping).\n\tEncrypted message: ${chalk.gray(
-            arrayOfEncryptedCode
-          )}`
-        );
+        console.log(`\tEncrypted message: ${chalk.gray(arrayOfEncryptedCode)}`);
 
         const messageDecrypted = decrypt(arrayOfEncryptedCode, BigInt(d), n);
         console.log(
           `\n\t${
             EActors.Alice
-          } can decrypt the message since she has the private key ${chalk.bgCyan(
+          } can decrypt the message since she has the private key ${chalk.bold.bgCyan(
             "(d, n)"
           )}.\n\tDecrypted message: ${chalk.gray(messageDecrypted)}\n\t${
             EActors.Alice
@@ -168,13 +169,13 @@ async function _() {
         console.log(
           `\n\t${
             EActors.Eve
-          } is going to figure out what the private key d is using Discrete Log with the public key ${chalk.bgCyan(
+          } is going to figure out what the private key d is using Discrete Log with the public key ${chalk.bold.bgCyan(
             "(e, n)"
           )} and other information.`
         );
         const d = findPrivateKey(BigInt(e), n);
         console.log(
-          `\tPrivate Key ${chalk.bgCyan("(d, n)")}: ${chalk.gray(
+          `\tPrivate Key ${chalk.bold.bgCyan("(d, n)")}: ${chalk.gray(
             `(${d}, ${n})`
           )}`
         );

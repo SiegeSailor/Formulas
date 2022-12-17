@@ -8,7 +8,9 @@ import { ENames, EChoices } from "./common/constants";
 
 inquirer.registerPrompt("press-to-continue", PressToContinuePrompt);
 
-function execute() {}
+function execute() {
+  throw new Error("This feature is not ready yet.");
+}
 
 async function demonstrate() {
   try {
@@ -56,7 +58,7 @@ async function main(message: string) {
       }
     })
     .catch((error) => {
-      console.error(chalk.red(error.message));
+      console.error("\t" + chalk.red(error.message));
       main("Unexpected result. Please restart your flow.");
     });
 }

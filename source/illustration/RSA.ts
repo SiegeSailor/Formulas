@@ -1,5 +1,5 @@
-import blumBlumShubPseudoRandomNumberGenerator from "../algorithms/blum-blum-shub-pseudo-random-number-generator";
-import { isPrime } from "../algorithms/miller-rabin-primarily-test";
+import blumBlumShubPseudoRandomNumberGenerator from "../algorithms/blum-blum-shub";
+import { _ as millerRabinPrimarilyTest } from "../algorithms/miller-rabin-primarily-test";
 
 const ALICE = "Alice",
   Bob = "Bob",
@@ -9,7 +9,7 @@ function obtainPQ() {
   const arrayOfPrime: number[] = [];
   while (arrayOfPrime.length != 2) {
     const answer = blumBlumShubPseudoRandomNumberGenerator();
-    if (isPrime(answer, 5)) arrayOfPrime.push(answer);
+    if (millerRabinPrimarilyTest(answer, 5)) arrayOfPrime.push(answer);
 
     if (arrayOfPrime.length != 2) console.log("Generating...");
   }

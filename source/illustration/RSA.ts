@@ -1,12 +1,10 @@
 import chalk from "chalk";
+import inquirer from "inquirer";
 import nanospinner from "nanospinner";
 
-import { _ as blumBlumShub } from "../algorithms/blum-blum-shub";
-import { _ as millerRabinPrimarilyTest } from "../algorithms/miller-rabin-primarily-test";
-
-const ALICE = "Alice",
-  Bob = "Bob",
-  Eve = "Eve";
+import { blumBlumShub, millerRabinPrimarilyTest } from "../entry-point";
+import { EActors } from "../common/constants";
+import { inquireConfirm } from "../common/utilities";
 
 function obtainPQ(bits: number, level: number) {
   const arrayOfPrime: bigint[] = [];
@@ -20,35 +18,65 @@ function obtainPQ(bits: number, level: number) {
   return arrayOfPrime;
 }
 
-function obtainCandidates() {
-  return;
+function obtainCandidates(r: bigint) {
+  const arrayOfCandidate: bigint[] = [];
+
+  let cache = r + BigInt(1);
+  for (let i = 0; i < 10; i++) {
+    arrayOfCandidate.push(cache);
+    cache = cache + r;
+  }
+
+  return arrayOfCandidate;
 }
 
-function _() {
+async function _() {
   console.log("== Demonstrating RSA Encryption ==");
   console.log("There are three people in this RSA encryption process:");
-  console.log(`\t${ALICE}\n\t${Bob}\n\t${Eve}\n`);
+  console.log(`\t${EActors.Alice}\n\t${EActors.Bob}\n\t${EActors.Eve}\n`);
 
-  console.log("Alice is going to pick up prime numbers P and Q:");
-  const bits = 10,
-    level = 5;
-  const spinner = nanospinner
-    .createSpinner(
-      chalk.yellow(`Picking ${bits}-bit prime numbers at random level ${level}`)
-    )
-    .start();
-  const [p, q] = obtainPQ(bits, level),
-    n = p * q,
-    r = (p - BigInt(1)) * (q - BigInt(1));
-  spinner.success({ text: chalk.green("Done") });
-  console.table(
-    [
-      { name: "P", value: p },
-      { name: "Q", value: q },
-      { name: "n", value: n },
-      { name: "r", value: r },
-    ],
-    ["name", "value"]
+  const r = await inquireConfirm(
+    `${EActors.Alice} is going to pick up prime numbers P and Q:`,
+    () => {
+      const bits = 10,
+        level = 5;
+      const spinner = nanospinner
+        .createSpinner(
+          chalk.cyan(
+            `Obtaining ${bits}-bit prime numbers at random level ${level}`
+          )
+        )
+        .start({ color: "cyan" });
+      const [p, q] = obtainPQ(bits, level);
+      spinner.success({ text: chalk.cyan("Done") });
+
+      const n = p * q;
+      const r = (p - BigInt(1)) * (q - BigInt(1));
+      console.table(
+        [
+          { name: "P", value: p },
+          { name: "Q", value: q },
+          { name: "n", value: n },
+          { name: "r", value: r },
+        ],
+        ["name", "value"]
+      );
+
+      return r;
+    }
+  );
+
+  inquireConfirm(
+    `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
+    () => {
+      const arrayOfCandidate = obtainCandidates(r);
+      console.table(
+        arrayOfCandidate.map((candidate) => {
+          return { value: candidate };
+        }),
+        ["value"]
+      );
+    }
   );
 }
 

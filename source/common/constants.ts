@@ -11,3 +11,9 @@ export enum EChoices {
 export enum ESymbols {
   Congruent = "\u2245",
 }
+
+export enum EActors {
+  Alice = "Alice",
+  Bob = "Bob",
+  Eve = "Eve",
+}

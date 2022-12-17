@@ -1,9 +1,12 @@
 import inquirer from "inquirer";
+import PressToContinuePrompt from "inquirer-press-to-continue";
 import chalk from "chalk";
 import { readdirSync } from "fs";
 import { join } from "path";
 
 import { ENames, EChoices } from "./common/constants";
+
+inquirer.registerPrompt("press-to-continue", PressToContinuePrompt);
 
 function execute() {}
 

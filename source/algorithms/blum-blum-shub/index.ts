@@ -1,12 +1,10 @@
 import random from "random-bigint";
 
 export function _(bits: number) {
-  if (bits <= 1) throw new Error("Bits must be at least 2");
-
-  const p = random(bits),
-    q = random(bits),
+  const p = random(bits) + BigInt(1),
+    q = random(bits) + BigInt(1),
     m = p * q;
-  const seed = random(bits);
+  const seed = random(bits) + BigInt(1);
   let result = seed;
 
   return () => {

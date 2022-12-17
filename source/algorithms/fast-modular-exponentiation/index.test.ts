@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 import { _ as fastModularExponentiation } from "./index";
 import { ESymbols } from "../../constants";
 
@@ -9,7 +11,7 @@ describe("Calculating the remainder from doing modulus for a number with exponen
     [985019284, 118293113, 13, 6],
     [1314520, 17, 11, 4],
   ])(
-    `%p^%p mod %p ${ESymbols.Congruent} %p`,
+    `%p^%p % %p ${ESymbols.Congruent} x.\n\tx = ${chalk.greenBright("%p")}`,
     (base, exponent, modulo, result) => {
       expect(
         fastModularExponentiation(

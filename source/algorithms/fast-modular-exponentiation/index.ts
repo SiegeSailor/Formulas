@@ -1,13 +1,13 @@
 import inquirer from "inquirer";
 
-export function _(base: bigint, exponent: bigint, modulo: bigint) {
+export function _(base: bigint, exponent: bigint, modulo: bigint): bigint {
   const recursion = (
     base: bigint,
     exponent: bigint,
     product: bigint,
     modulo: bigint
   ) => {
-    if (!exponent) return product;
+    if (!exponent) return BigInt(product);
 
     return exponent % BigInt(2) == BigInt(0)
       ? recursion((base * base) % modulo, exponent / BigInt(2), product, modulo)

@@ -20,3 +20,6 @@ firebase-debug.log
 
 # Optional eslint cache
 .eslintcache
+
+# Misc
+.DS_Store

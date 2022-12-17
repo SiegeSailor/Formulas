@@ -30,8 +30,8 @@ function _() {
   console.log(`\t${ALICE}\n\t${Bob}\n\t${Eve}\n`);
 
   console.log("Alice is going to pick up prime numbers P and Q:");
-  const bits = 30,
-    level = 10;
+  const bits = 10,
+    level = 5;
   const spinner = nanospinner
     .createSpinner(
       chalk.yellow(`Picking ${bits}-bit prime numbers at random level ${level}`)

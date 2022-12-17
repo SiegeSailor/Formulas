@@ -1,4 +1,4 @@
-function _(left: number, right: number) {
+export function _(left: number, right: number) {
   const recursion = (left: number, right: number) => {
     if (right == 0) return [left, 1, 0];
 
@@ -12,5 +12,3 @@ function _(left: number, right: number) {
 
   return recursion(left, right);
 }
-
-export default _;

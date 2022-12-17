@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { readdirSync } from "fs";
 import { join } from "path";
 
-import { ENames, EChoices } from "./constants";
+import { ENames, EChoices } from "./common/constants";
 
 function execute() {}
 

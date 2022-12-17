@@ -5,7 +5,6 @@ import {
   blumBlumShub,
   fastModularExponentiation,
   millerRabinPrimarilyTest,
-  multiplicativeInverse,
   pollardP1Factorization,
 } from "../entry-point";
 import { EActors } from "../common/constants";
@@ -19,11 +18,20 @@ function obtainPQ(bits: number, level: number) {
     if (millerRabinPrimarilyTest(numberPseudoRandom, level))
       arrayOfPrime.push(numberPseudoRandom);
   }
+
   return arrayOfPrime;
 }
 
-function obtainCandidates(base: bigint, modulo: bigint) {
-  return multiplicativeInverse(base, modulo, 10);
+function obtainCandidates(r: bigint) {
+  const arrayOfCandidate: bigint[] = [];
+
+  let cache = r + BigInt(1);
+  for (let i = 0; i < 10; i++) {
+    arrayOfCandidate.push(cache);
+    cache = cache + r;
+  }
+
+  return arrayOfCandidate;
 }
 
 function encrypt(message: string, exponent: bigint, modulo: bigint) {
@@ -46,8 +54,8 @@ function decrypt(
     .join("");
 }
 
-function findPrivateKey(generator: bigint, base: bigint, modulo: bigint) {
-  return babyStepGiantStep(generator, base, modulo);
+function findPrivateKey(e: bigint, n: bigint) {
+  return babyStepGiantStep(n, 1n, e);
 }
 
 async function _() {
@@ -81,7 +89,7 @@ async function _() {
     const candidate = await inquire.confirm(
       `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
       () => {
-        const arrayOfCandidate = obtainCandidates(r + BigInt(1), r);
+        const arrayOfCandidate = obtainCandidates(r);
         log.list(
           arrayOfCandidate.map((candidate, index) => {
             return { name: String(index + 1), value: candidate };
@@ -163,7 +171,7 @@ async function _() {
             "(e, n)"
           )} and other information.`
         );
-        const d = findPrivateKey(BigInt(e), n, 1n);
+        const d = findPrivateKey(BigInt(e), n);
         console.log(
           `\tPrivate Key ${chalk.bold.bgCyan("(d, n)")}: ${chalk.gray(
             `(${d}, ${n})`

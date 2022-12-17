@@ -1,8 +1,33 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
-import nanospinner from "nanospinner";
+import { readdirSync } from "fs";
+import { join } from "path";
 
 import { ENames, EChoices } from "./constants";
+
+function execute() {}
+
+function demonstrate() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: ENames.Demonstrate,
+        message: "Which cryptograph procedure do you want to demonstrate?",
+        choices: readdirSync(join(process.cwd(), "source/illustration")).map(
+          (filename) => {
+            return { name: filename };
+          }
+        ),
+      },
+    ])
+    .then(async ({ [ENames.Demonstrate]: demonstrate }) => {
+      const call = await import(
+        join(process.cwd(), `source/illustration/${demonstrate}`)
+      );
+      call.default();
+    });
+}
 
 function main() {
   inquirer
@@ -17,8 +42,10 @@ function main() {
     .then(({ [ENames.Purpose]: purpose }) => {
       switch (purpose) {
         case EChoices.Demonstrate:
+          demonstrate();
           break;
         case EChoices.Execute:
+          execute();
           break;
         default:
           throw new Error("Something wrong with the prompt flow.");
@@ -26,15 +53,6 @@ function main() {
     })
     .catch((error) => {
       console.error(chalk.red(error.message));
-    })
-    .finally(() => {
-      const spinner = nanospinner
-        .createSpinner(chalk.yellow("Processing"))
-        .start();
-      setTimeout(() => {
-        spinner.success({ text: chalk.green("Done") });
-        main();
-      }, 200);
     });
 }
 

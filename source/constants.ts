@@ -1,5 +1,6 @@
 export enum ENames {
   Purpose = "Purpose",
+  Demonstrate = "Demonstrate",
 }
 
 export enum EChoices {

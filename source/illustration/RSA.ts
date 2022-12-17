@@ -8,7 +8,7 @@ import {
   pollardP1Factorization,
 } from "../entry-point";
 import { EActors } from "../common/constants";
-import { logHighlight, logList, inquireConfirm } from "../common/utilities";
+import { log, inquire } from "../common/utilities";
 
 function obtainPQ(bits: number, level: number) {
   const arrayOfPrime: bigint[] = [];
@@ -60,13 +60,13 @@ function findPrivateKey(e: bigint, n: bigint) {
 
 async function _() {
   try {
-    logHighlight("=== Demonstrating RSA Encryption ===");
+    log.highlight("=== Demonstrating RSA Encryption ===");
     console.log("There are three people in this RSA encryption process:");
     console.log(
       `\t${EActors.Alice} - Receiver\n\t${EActors.Bob} - Sender\n\t${EActors.Eve} - Eavesdropper`
     );
 
-    const [p, q, n, r] = await inquireConfirm(
+    const [p, q, n, r] = await inquire.confirm(
       `${EActors.Alice} is going to pick up prime numbers P and Q:`,
       () => {
         const bits = 8,
@@ -75,7 +75,7 @@ async function _() {
 
         const n = p * q;
         const r = (p - BigInt(1)) * (q - BigInt(1));
-        logList([
+        log.list([
           { name: "P", value: p },
           { name: "Q", value: q },
           { name: "n", value: n },
@@ -86,7 +86,7 @@ async function _() {
       }
     );
 
-    const arrayOfCandidate = await inquireConfirm(
+    const arrayOfCandidate = await inquire.confirm(
       `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
       () => {
         const arrayOfCandidate = obtainCandidates(r);
@@ -98,7 +98,7 @@ async function _() {
       }
     );
 
-    const [e, d] = await inquireConfirm(
+    const [e, d] = await inquire.confirm(
       `${EActors.Alice} selects the first value from the list as K to compute e and d:`,
       () => {
         const arrayOfPrimeFactor = pollardP1Factorization(arrayOfCandidate[0]);
@@ -109,13 +109,13 @@ async function _() {
     );
 
     const message = "This is a hardcoded secret message.";
-    const arrayOfEncryptedCode = await inquireConfirm(
+    const arrayOfEncryptedCode = await inquire.confirm(
       `${EActors.Alice} chooses ${chalk.bgGray(
         message
       )} as the secret message:`,
       () => {
         console.log(`\tNow ${EActors.Alice} has the following numbers:`);
-        logList([
+        log.list([
           { name: "P", value: p },
           { name: "Q", value: q },
           { name: "n", value: n },
@@ -155,11 +155,11 @@ async function _() {
       }
     );
 
-    await inquireConfirm(
+    await inquire.confirm(
       `${EActors.Eve} is going to decrypt the secret message.`,
       () => {
         console.log(`\tNow ${EActors.Eve} has the following stuff:`);
-        logList([
+        log.list([
           { name: "n", value: n },
           { name: "e", value: e },
           { name: "secret message", value: arrayOfEncryptedCode },

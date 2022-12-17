@@ -25,7 +25,8 @@ export function _(input: bigint, level: number) {
     return false;
   };
 
-  if (input <= 1) return false;
+  if (input <= 1 || input === BigInt(4)) return false;
+  if (input <= 3) return true;
 
   let odd = input - BigInt(1);
   while (odd % BigInt(2) === BigInt(0)) odd /= BigInt(2);

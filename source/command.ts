@@ -56,13 +56,12 @@ async function main(message: string) {
         default:
           throw new Error("Something wrong with the prompt flow.");
       }
+
+      main("What do you want to do?");
     })
-    .catch((error) => {
-      console.error(
-        `\t${chalk.red(`${error.name}: ${error.message}`)}\n\t${chalk.gray(
-          error.cause
-        )}`
-      );
+    .catch((_) => {
+      const error: Error = _;
+      console.error(`\t${chalk.red(error.message)}`);
       main("Unexpected result. Please restart your flow.");
     });
 }

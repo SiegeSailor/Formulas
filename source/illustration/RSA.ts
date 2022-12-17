@@ -86,7 +86,7 @@ async function _() {
       }
     );
 
-    const arrayOfCandidate = await inquire.confirm(
+    const candidate = await inquire.confirm(
       `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
       () => {
         const arrayOfCandidate = obtainCandidates(r);
@@ -96,17 +96,15 @@ async function _() {
           })
         );
 
-        return arrayOfCandidate;
+        return arrayOfCandidate[0];
       }
     );
 
     const [e, d] = await inquire.confirm(
       `${EActors.Alice} selects the first value from the list to compute e and d:`,
       () => {
-        const arrayOfPrimeFactor = pollardP1Factorization(arrayOfCandidate[0]);
-        console.log(
-          `\t${arrayOfCandidate[0]} has factors: ${arrayOfPrimeFactor}`
-        );
+        const arrayOfPrimeFactor = pollardP1Factorization(candidate);
+        console.log(`\t${candidate} has factors: ${arrayOfPrimeFactor}`);
 
         return arrayOfPrimeFactor;
       }
@@ -187,6 +185,8 @@ async function _() {
         );
       }
     );
+
+    log.highlight("=== End of RSA Encryption ===");
   } catch (error) {
     throw error;
   }

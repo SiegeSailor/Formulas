@@ -53,7 +53,7 @@ This command-line tool allows you to either demonstrate encryption flow or execu
 
 Executing Euclidean algorithm with your own inputs:
 
-![Execute Euclidean](./documents/execute-euculidean.png)
+![Execute Euclidean](./documents/execute-euclidean.png)
 
 ### Test
 

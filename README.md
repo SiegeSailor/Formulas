@@ -43,6 +43,18 @@ Then you are able to run the command-line tool with:
 npm run start
 ```
 
+![Command Start](./documents/command-start.png)
+
+### Start
+
+This command-line tool allows you to either demonstrate encryption flow or execute algorithms with the inputs from you. Here is an example of RSA:
+
+![Demonstrate RSA](./documents/demonstrate-rsa.png)
+
+Executing Euclidean algorithm with your own inputs:
+
+![Execute Euclidean](./documents/execute-euculidean.png)
+
 ### Test
 
 Formulas uses Jest for unit tests purpose. You can generate the coverage report:
@@ -51,11 +63,15 @@ Formulas uses Jest for unit tests purpose. You can generate the coverage report:
 npm run test -- --coverage
 ```
 
+![Test Coverage](./documents/test-coverage.png)
+
 Or see the detail for each test case:
 
 ```bash
 npm run test -- --verbose
 ```
+
+![Test Verbose](./documents/test-verbose.png)
 
 #### Issues
 

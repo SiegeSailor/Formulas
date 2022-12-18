@@ -34,7 +34,7 @@ export const inquire = {
 };
 
 export const wrap = {
-  obtainRandomPrime: (bits: number, level: number, count: number) => {
+  randomize: (bits: number, level: number, count: number) => {
     const arrayOfPrime: bigint[] = [];
 
     while (arrayOfPrime.length != count) {
@@ -44,6 +44,21 @@ export const wrap = {
     }
 
     return arrayOfPrime;
+  },
+  remain: (modulo: bigint, remainder: bigint) => {
+    if (remainder >= modulo)
+      throw new Error(
+        "Desired remainder can't be equal to or larger than the given modulo."
+      );
+
+    const arrayOfResult: bigint[] = [];
+
+    let cache = modulo + remainder;
+    for (let i = 0; i < 10; i++) {
+      arrayOfResult.push(cache);
+      cache = cache + modulo;
+    }
+    return arrayOfResult;
   },
   encrypt: (message: string, callback: (code: number) => bigint) => {
     return message.split("").map((character) => {

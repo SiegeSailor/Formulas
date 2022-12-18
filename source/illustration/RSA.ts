@@ -8,18 +8,6 @@ import {
 import { EActors } from "../common/constants";
 import { log, inquire, wrap } from "../common/utilities";
 
-function obtainCandidates(r: bigint) {
-  const arrayOfCandidate: bigint[] = [];
-
-  let cache = r + BigInt(1);
-  for (let i = 0; i < 10; i++) {
-    arrayOfCandidate.push(cache);
-    cache = cache + r;
-  }
-
-  return arrayOfCandidate;
-}
-
 async function _() {
   try {
     log.highlight("=== Demonstrating RSA Encryption ===");
@@ -31,7 +19,7 @@ async function _() {
     const [p, q, n, r] = await inquire.confirm(
       `${EActors.Alice} is going to pick prime numbers P and Q:`,
       () => {
-        const [p, q] = wrap.obtainRandomPrime(16, 5, 2);
+        const [p, q] = wrap.randomize(16, 5, 2);
 
         const n = p * q;
         const r = (p - BigInt(1)) * (q - BigInt(1));
@@ -49,7 +37,7 @@ async function _() {
     const candidate = await inquire.confirm(
       `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
       () => {
-        const arrayOfCandidate = obtainCandidates(r);
+        const arrayOfCandidate = wrap.remain(r, BigInt(1));
         log.list(
           arrayOfCandidate.map((candidate, index) => {
             return { name: String(index + 1), value: candidate };

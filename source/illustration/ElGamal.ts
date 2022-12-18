@@ -15,7 +15,7 @@ async function _() {
     await inquire.confirm(
       `${EActors.Alice} is going to pick prime number P, generator G, and private key K`,
       () => {
-        const [p] = wrap.obtainRandomPrime(16, 5, 1);
+        const [p] = wrap.randomize(16, 5, 1);
         const g = naorReingo(1, 1)[0];
       }
     );

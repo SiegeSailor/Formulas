@@ -12,8 +12,23 @@ function exit() {
   console.log(chalk.gray("Successfully terminated the program."));
 }
 
-function execute() {
-  throw new Error("This feature is not ready yet.");
+async function execute() {
+  try {
+    const { [ENames.Execute]: execute } = await inquirer.prompt([
+      {
+        type: "list",
+        name: ENames.Execute,
+        message: "Which cryptograph algorithm do you want to execute?",
+        choices: [{ name: "euclidean" }],
+      },
+    ]);
+    const call = await import(
+      join(process.cwd(), `source/algorithms/${execute}/index.ts`)
+    );
+    await call.prompt();
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function demonstrate() {
@@ -60,7 +75,7 @@ async function main(message = "What do you want to do?") {
           main();
           break;
         case EChoices.Execute:
-          execute();
+          await execute();
           main();
           break;
         case EChoices.Exit:

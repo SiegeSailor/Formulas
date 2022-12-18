@@ -1,5 +1,3 @@
-import inquirer from "inquirer";
-
 export function _(base: bigint, exponent: bigint, modulo: bigint): bigint {
   const recursion = (
     base: bigint,
@@ -20,14 +18,4 @@ export function _(base: bigint, exponent: bigint, modulo: bigint): bigint {
   };
 
   return recursion(base, exponent, BigInt(1), modulo);
-}
-
-export function prompt() {
-  inquirer.prompt([
-    {
-      type: "number",
-      name: "left",
-      message: "",
-    },
-  ]);
 }

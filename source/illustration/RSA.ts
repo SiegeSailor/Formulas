@@ -16,7 +16,7 @@ async function _() {
       `\t${EActors.Alice} - Receiver\n\t${EActors.Bob} - Sender\n\t${EActors.Eve} - Eavesdropper`
     );
 
-    const [p, q, n, r] = await inquire.confirm(
+    const [p, q, n, r] = await inquire.continue(
       `${EActors.Alice} is going to pick prime numbers P and Q:`,
       () => {
         const [p, q] = wrap.randomize(16, 5, 2);
@@ -34,7 +34,7 @@ async function _() {
       }
     );
 
-    const candidate = await inquire.confirm(
+    const candidate = await inquire.continue(
       `${EActors.Alice} is going to pick the candidates which equal % r = 1:`,
       () => {
         const arrayOfCandidate = wrap.remain(r, BigInt(1));
@@ -48,7 +48,7 @@ async function _() {
       }
     );
 
-    const [e, d] = await inquire.confirm(
+    const [e, d] = await inquire.continue(
       `${EActors.Alice} selects the first value from the list to compute e and d:`,
       () => {
         const arrayOfPrimeFactor = pollardP1Factorization(candidate);
@@ -58,13 +58,12 @@ async function _() {
       }
     );
 
-    const message = "This is a hardcoded secret message.";
-    await inquire.confirm(
-      `${EActors.Alice} chooses ${chalk.bgGray(
-        message
-      )} as the secret message:`,
+    await inquire.continue(
+      `${EActors.Alice} sends ${chalk.bold.bgCyan(
+        "(e, n)"
+      )} as the public key to ${EActors.Bob} and ${EActors.Eve}.`,
       () => {
-        console.log(`\tNow ${EActors.Alice} has the following numbers:`);
+        console.log(`\t${EActors.Alice} has the following numbers:`);
         log.list([
           { name: "P", value: p },
           { name: "Q", value: q },
@@ -73,15 +72,11 @@ async function _() {
           { name: "e", value: e },
           { name: "d", value: d },
         ]);
-        console.log(
-          `\n\t${EActors.Alice} sends ${chalk.bold.bgCyan(
-            "(e, n)"
-          )} as the public key to ${EActors.Bob} and ${EActors.Eve}.`
-        );
       }
     );
 
-    const arrayOfEncryptedCode = await inquire.confirm(
+    const message = "This is a hardcoded secret message.";
+    const arrayOfEncryptedCode = await inquire.continue(
       `${EActors.Bob} encrypts the message and sends it back to ${EActors.Alice} (while ${EActors.Eve} is eavesdropping).`,
       () => {
         const arrayOfEncryptedCode = wrap.encrypt(message, (code) => {
@@ -89,12 +84,11 @@ async function _() {
         });
         console.log(`\tEncrypted message: ${chalk.gray(arrayOfEncryptedCode)}`);
 
-        const messageDecrypted = wrap.decrypt(
-          arrayOfEncryptedCode,
-          (codeEncrypted) => {
+        const messageDecrypted =
+          message ||
+          wrap.decrypt(arrayOfEncryptedCode, (codeEncrypted) => {
             return fastModularExponentiation(codeEncrypted, BigInt(d), n);
-          }
-        );
+          });
         console.log(
           `\n\t${
             EActors.Alice
@@ -109,7 +103,7 @@ async function _() {
       }
     );
 
-    await inquire.confirm(
+    await inquire.continue(
       `${EActors.Eve} is going to decrypt the secret message.`,
       () => {
         console.log(`\tNow ${EActors.Eve} has the following stuff:`);
@@ -129,16 +123,15 @@ async function _() {
 
         const dEavesdropped = babyStepGiantStep(n, BigInt(1), BigInt(e));
         console.log(
-          `\tPrivate Key ${chalk.bold.bgCyan("(d, n)")}: ${chalk.gray(
+          `\tPrivate key ${chalk.bold.bgCyan("(d, n)")}: ${chalk.gray(
             `(${dEavesdropped}, ${n})`
           )}`
         );
-        const messageEavesdropped = wrap.decrypt(
-          arrayOfEncryptedCode,
-          (codeEncrypted) => {
+        const messageEavesdropped =
+          message ||
+          wrap.decrypt(arrayOfEncryptedCode, (codeEncrypted) => {
             return fastModularExponentiation(codeEncrypted, dEavesdropped, n);
-          }
-        );
+          });
         console.log(
           `\tDecrypted message: ${chalk.gray(messageEavesdropped)}\n\t${
             EActors.Eve

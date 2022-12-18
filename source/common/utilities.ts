@@ -16,7 +16,7 @@ export const log = {
 };
 
 export const inquire = {
-  confirm: async <T>(title: string, callback: () => T): Promise<T> => {
+  continue: async <T>(title: string, callback: () => T): Promise<T> => {
     try {
       log.highlight(title);
       await inquirer.prompt<{ key: KeyDescriptor }>({

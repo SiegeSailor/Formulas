@@ -1,7 +1,8 @@
 import chalk from "chalk";
+import { naorReingo } from "entry-point";
 
 import { EActors } from "../common/constants";
-import { log, inquire } from "../common/utilities";
+import { log, inquire, wrap } from "../common/utilities";
 
 async function _() {
   try {
@@ -11,7 +12,13 @@ async function _() {
       `\t${EActors.Alice} - Receiver\n\t${EActors.Bob} - Sender\n\t${EActors.Eve} - Eavesdropper`
     );
 
-    await inquire.confirm(``, () => {});
+    await inquire.confirm(
+      `${EActors.Alice} is going to pick prime number P, generator G, and private key K`,
+      () => {
+        const [p] = wrap.obtainRandomPrime(16, 5, 1);
+        const g = naorReingo(1, 1)[0];
+      }
+    );
 
     log.highlight("=== End of ElGamal Encryption ===");
   } catch (error) {

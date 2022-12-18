@@ -2,25 +2,11 @@ import chalk from "chalk";
 
 import {
   babyStepGiantStep,
-  blumBlumShub,
   fastModularExponentiation,
-  millerRabinPrimarilyTest,
   pollardP1Factorization,
 } from "../entry-point";
 import { EActors } from "../common/constants";
-import { log, inquire } from "../common/utilities";
-
-function obtainPQ(bits: number, level: number) {
-  const arrayOfPrime: bigint[] = [];
-
-  while (arrayOfPrime.length != 2) {
-    const numberPseudoRandom = blumBlumShub(bits)();
-    if (millerRabinPrimarilyTest(numberPseudoRandom, level))
-      arrayOfPrime.push(numberPseudoRandom);
-  }
-
-  return arrayOfPrime;
-}
+import { log, inquire, wrap } from "../common/utilities";
 
 function obtainCandidates(r: bigint) {
   const arrayOfCandidate: bigint[] = [];
@@ -34,30 +20,6 @@ function obtainCandidates(r: bigint) {
   return arrayOfCandidate;
 }
 
-function encrypt(message: string, exponent: bigint, modulo: bigint) {
-  return message.split("").map((character) => {
-    const code = character.charCodeAt(0);
-    return fastModularExponentiation(BigInt(code), exponent, modulo);
-  });
-}
-
-function decrypt(
-  arrayOfEncryptedCode: bigint[],
-  exponent: bigint,
-  modulo: bigint
-) {
-  return arrayOfEncryptedCode
-    .map((codeEncrypted) => {
-      const code = fastModularExponentiation(codeEncrypted, exponent, modulo);
-      return String.fromCharCode(Number(code));
-    })
-    .join("");
-}
-
-function findPrivateKey(e: bigint, n: bigint) {
-  return babyStepGiantStep(n, 1n, e);
-}
-
 async function _() {
   try {
     log.highlight("=== Demonstrating RSA Encryption ===");
@@ -67,11 +29,9 @@ async function _() {
     );
 
     const [p, q, n, r] = await inquire.confirm(
-      `${EActors.Alice} is going to pick up prime numbers P and Q:`,
+      `${EActors.Alice} is going to pick prime numbers P and Q:`,
       () => {
-        const bits = 8,
-          level = 5;
-        const [p, q] = obtainPQ(bits, level);
+        const [p, q] = wrap.obtainRandomPrime(16, 5, 2);
 
         const n = p * q;
         const r = (p - BigInt(1)) * (q - BigInt(1));
@@ -136,10 +96,17 @@ async function _() {
     const arrayOfEncryptedCode = await inquire.confirm(
       `${EActors.Bob} encrypts the message and sends it back to ${EActors.Alice} (while ${EActors.Eve} is eavesdropping).`,
       () => {
-        const arrayOfEncryptedCode = encrypt(message, BigInt(e), n);
+        const arrayOfEncryptedCode = wrap.encrypt(message, (code) => {
+          return fastModularExponentiation(BigInt(code), BigInt(e), n);
+        });
         console.log(`\tEncrypted message: ${chalk.gray(arrayOfEncryptedCode)}`);
 
-        const messageDecrypted = decrypt(arrayOfEncryptedCode, BigInt(d), n);
+        const messageDecrypted = wrap.decrypt(
+          arrayOfEncryptedCode,
+          (codeEncrypted) => {
+            return fastModularExponentiation(codeEncrypted, BigInt(d), n);
+          }
+        );
         console.log(
           `\n\t${
             EActors.Alice
@@ -171,15 +138,21 @@ async function _() {
             "(e, n)"
           )} and other information.`
         );
-        const d = findPrivateKey(BigInt(e), n);
+
+        const dEavesdropped = babyStepGiantStep(n, BigInt(1), BigInt(e));
         console.log(
           `\tPrivate Key ${chalk.bold.bgCyan("(d, n)")}: ${chalk.gray(
-            `(${d}, ${n})`
+            `(${dEavesdropped}, ${n})`
           )}`
         );
-        const messageDecrypted = decrypt(arrayOfEncryptedCode, d, n);
+        const messageEavesdropped = wrap.decrypt(
+          arrayOfEncryptedCode,
+          (codeEncrypted) => {
+            return fastModularExponentiation(codeEncrypted, dEavesdropped, n);
+          }
+        );
         console.log(
-          `\tDecrypted message: ${chalk.gray(messageDecrypted)}\n\t${
+          `\tDecrypted message: ${chalk.gray(messageEavesdropped)}\n\t${
             EActors.Eve
           } verifies the message with ${EActors.Bob}.`
         );

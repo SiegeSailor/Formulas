@@ -21,7 +21,15 @@ async function execute() {
         message: "Which cryptograph algorithm do you want to execute?",
         choices: readdirSync(join(process.cwd(), "source/algorithms")).map(
           (folder) => {
-            return { name: folder };
+            return {
+              name: folder
+                .split("-")
+                .map((word) => {
+                  return word[0].toUpperCase() + word.slice(1);
+                })
+                .join(" "),
+              value: folder,
+            };
           }
         ),
         pageSize: Number.MAX_VALUE,

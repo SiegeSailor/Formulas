@@ -4,6 +4,17 @@ import type { KeyDescriptor } from "inquirer-press-to-continue";
 
 import { blumBlumShub, millerRabinPrimarilyTest } from "../entry-point";
 
+export const format = {
+  algorithm: (foldername: string) => {
+    return foldername
+      .split("-")
+      .map((word) => {
+        return word[0].toUpperCase() + word.slice(1);
+      })
+      .join(" ");
+  },
+};
+
 export const log = {
   highlight: (input: string) => {
     console.log("\n" + chalk.bold.cyan(input));

@@ -1,12 +1,13 @@
 import inquirer from "inquirer";
-import PressToContinuePrompt from "inquirer-press-to-continue";
+import InquirerPluginPressToContinue from "inquirer-press-to-continue";
 import chalk from "chalk";
 import { readdirSync } from "fs";
 import { join } from "path";
 
+import { format } from "./common/utilities";
 import { ENames, EChoices } from "./common/constants";
 
-inquirer.registerPrompt("press-to-continue", PressToContinuePrompt);
+inquirer.registerPrompt("press-to-continue", InquirerPluginPressToContinue);
 
 function exit() {
   console.log(chalk.gray("Successfully terminated the program."));
@@ -14,29 +15,26 @@ function exit() {
 
 async function execute() {
   try {
-    const { [ENames.Execute]: execute } = await inquirer.prompt([
+    const arrayOfFolder = readdirSync(join(process.cwd(), "source/algorithms"));
+    const { [ENames.Execute]: index } = await inquirer.prompt([
       {
         type: "rawlist",
         name: ENames.Execute,
         message: "Which cryptograph algorithm do you want to execute?",
-        choices: readdirSync(join(process.cwd(), "source/algorithms")).map(
-          (folder) => {
-            return {
-              name: folder
-                .split("-")
-                .map((word) => {
-                  return word[0].toUpperCase() + word.slice(1);
-                })
-                .join(" "),
-              value: folder,
-            };
-          }
-        ),
+        choices: arrayOfFolder.map((foldername, index) => {
+          return {
+            name: format.algorithm(foldername),
+            value: index,
+          };
+        }),
         pageSize: Number.MAX_VALUE,
       },
     ]);
+
+    const choseAlgorithm = arrayOfFolder[index];
+    console.log(chalk.gray(format.algorithm(choseAlgorithm)));
     const { prompt } = await import(
-      join(process.cwd(), `source/algorithms/${execute}/index.ts`)
+      join(process.cwd(), `source/algorithms/${choseAlgorithm}/index.ts`)
     );
     if (!prompt)
       throw new Error("The algorithm is not ready for interactive commands.");

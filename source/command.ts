@@ -26,12 +26,27 @@ async function execute() {
         ),
       },
     ]);
-    const call = await import(
+    const { prompt } = await import(
       join(process.cwd(), `source/algorithms/${execute}/index.ts`)
     );
-    if (call.prompt) await call.prompt();
-    else
+    if (!prompt)
       throw new Error("The algorithm is not ready for interactive commands.");
+
+    await prompt();
+    while (true) {
+      const { [ENames.Restart]: isRestart } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: ENames.Restart,
+          message: "Do you want to restart this algorithm?",
+        },
+      ]);
+      if (isRestart) await prompt();
+      else {
+        console.log(chalk.gray("Going back to the main menu."));
+        break;
+      }
+    }
   } catch (error) {
     throw error;
   }

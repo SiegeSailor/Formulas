@@ -16,7 +16,7 @@ async function execute() {
   try {
     const { [ENames.Execute]: execute } = await inquirer.prompt([
       {
-        type: "list",
+        type: "rawlist",
         name: ENames.Execute,
         message: "Which cryptograph algorithm do you want to execute?",
         choices: readdirSync(join(process.cwd(), "source/algorithms")).map(
@@ -24,6 +24,7 @@ async function execute() {
             return { name: folder };
           }
         ),
+        pageSize: Number.MAX_VALUE,
       },
     ]);
     const { prompt } = await import(

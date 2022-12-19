@@ -8,9 +8,8 @@ import {
 import { EActors } from "../common/constants";
 import { log, inquire, wrap } from "../common/utilities";
 
-async function _() {
+export async function prompt() {
   try {
-    log.highlight("=== Demonstrating RSA Encryption ===");
     console.log("There are three people in this RSA encryption process:");
     console.log(
       `\t${EActors.Alice} - Receiver\n\t${EActors.Bob} - Sender\n\t${EActors.Eve} - Eavesdropper`
@@ -139,11 +138,7 @@ async function _() {
         );
       }
     );
-
-    log.highlight("=== End of RSA Encryption ===");
   } catch (error) {
     throw error;
   }
 }
-
-export default _;

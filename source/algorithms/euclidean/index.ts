@@ -1,8 +1,6 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 
-import { log } from "../../common/utilities";
-
 export function _(left: bigint, right: bigint): bigint {
   const remainder = left % right;
   if (left % right === BigInt(0)) return BigInt(right);
@@ -30,5 +28,5 @@ export async function prompt() {
   ]);
 
   const result = _(BigInt(left), BigInt(right));
-  log.highlight(`GCD(${left}, ${right}) = ${result}`);
+  console.log(`GCD(${left}, ${right}) = ${result}`);
 }

@@ -1,17 +1,23 @@
 import inquirer from "inquirer";
-import chalk from "chalk";
 import type { KeyDescriptor } from "inquirer-press-to-continue";
+import chalk from "chalk";
+import { readdirSync } from "fs";
+import { join } from "path";
 
 import { blumBlumShub, millerRabinPrimarilyTest } from "../entry-point";
+import Procedure from "./Procedure";
 
 export const format = {
-  algorithm: (foldername: string) => {
+  foldername: (foldername: string) => {
     return foldername
       .split("-")
       .map((word) => {
         return word[0].toUpperCase() + word.slice(1);
       })
       .join(" ");
+  },
+  filename: (filename: string) => {
+    return filename.split(".")[0];
   },
 };
 
@@ -38,6 +44,42 @@ export const inquire = {
       });
 
       return await callback();
+    } catch (error) {
+      throw error;
+    }
+  },
+  procedure: async (
+    path: string,
+    message: string,
+    fileFormatter: (input: string) => string
+  ) => {
+    try {
+      const arrayOfFile = readdirSync(join(process.cwd(), path));
+      const { procedure: index } = await inquirer.prompt([
+        {
+          type: "rawlist",
+          name: "procedure",
+          message,
+          choices: arrayOfFile.map((foldername, index) => {
+            return {
+              name: fileFormatter(foldername),
+              value: index,
+            };
+          }),
+          pageSize: Number.MAX_VALUE,
+        },
+      ]);
+
+      const name = fileFormatter(arrayOfFile[index]);
+      console.log(chalk.gray(name));
+      const { prompt }: { prompt: () => Promise<void> } = await import(
+        join(process.cwd(), `${path}/${arrayOfFile[index]}`)
+      );
+      if (!prompt)
+        throw new Error("The file is not ready for interactive commands.");
+
+      const procedure = new Procedure(name, prompt);
+      await procedure.run();
     } catch (error) {
       throw error;
     }

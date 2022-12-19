@@ -1,8 +1,6 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 
-import { log } from "../../common/utilities";
-
 export function _(left: bigint, right: bigint) {
   const recursion = (left: bigint, right: bigint) => {
     if (right == BigInt(0)) return [left, BigInt(1), BigInt(0)];
@@ -38,7 +36,7 @@ export async function prompt() {
   ]);
 
   const [result, x, y] = _(BigInt(left), BigInt(right));
-  log.highlight(
+  console.log(
     `GCD(${left}, ${right}) = ${x} * ${left} + ${y} * ${right} = ${result}`
   );
 }

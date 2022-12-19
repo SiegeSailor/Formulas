@@ -3,7 +3,6 @@ import inquirer from "inquirer";
 
 import { _ as euclidean } from "../euclidean";
 import { _ as fastModularExponentiation } from "../fast-modular-exponentiation";
-import { log } from "../../common/utilities";
 import { ESymbols } from "../../common/constants";
 
 export function _(generator: bigint, base: bigint, modulo: bigint) {
@@ -65,7 +64,7 @@ export async function prompt() {
   ]);
 
   const x = _(BigInt(generator), BigInt(base), BigInt(modulo));
-  log.highlight(
+  console.log(
     `\t${generator}^x ${ESymbols.Congruent} ${base} % ${modulo}. x = ${x}`
   );
 }

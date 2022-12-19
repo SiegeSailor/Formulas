@@ -19,13 +19,19 @@ async function execute() {
         type: "list",
         name: ENames.Execute,
         message: "Which cryptograph algorithm do you want to execute?",
-        choices: [{ name: "euclidean" }],
+        choices: readdirSync(join(process.cwd(), "source/algorithms")).map(
+          (folder) => {
+            return { name: folder };
+          }
+        ),
       },
     ]);
     const call = await import(
       join(process.cwd(), `source/algorithms/${execute}/index.ts`)
     );
-    await call.prompt();
+    if (call.prompt) await call.prompt();
+    else
+      throw new Error("The algorithm is not ready for interactive commands.");
   } catch (error) {
     throw error;
   }
@@ -39,8 +45,8 @@ async function demonstrate() {
         name: ENames.Demonstrate,
         message: "Which cryptograph procedure do you want to demonstrate?",
         choices: readdirSync(join(process.cwd(), "source/illustration")).map(
-          (filename) => {
-            return { name: filename };
+          (file) => {
+            return { name: file };
           }
         ),
       },
@@ -72,10 +78,12 @@ async function main(message = "What do you want to do?") {
       switch (purpose) {
         case EChoices.Demonstrate:
           await demonstrate();
+          console.log();
           main();
           break;
         case EChoices.Execute:
           await execute();
+          console.log();
           main();
           break;
         case EChoices.Exit:

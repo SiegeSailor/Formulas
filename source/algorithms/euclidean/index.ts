@@ -18,16 +18,17 @@ export async function prompt() {
     {
       type: "number",
       name: "left",
-      message: "Enter the left number:",
+      message: `Enter ${chalk.italic("left")}:`,
       default: BigInt(1),
     },
     {
       type: "number",
       name: "right",
-      message: "Enter the right number:",
+      message: `Enter ${chalk.italic("right")}:`,
       default: BigInt(1),
     },
   ]);
 
-  log.highlight(`GCD(${left}, ${right}) = ${_(BigInt(left), BigInt(right))}`);
+  const result = _(BigInt(left), BigInt(right));
+  log.highlight(`GCD(${left}, ${right}) = ${result}`);
 }

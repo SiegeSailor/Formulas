@@ -14,10 +14,10 @@ export default class Procedure {
         );
         await callback();
         while (true) {
-          const { restart: isRestart } = await inquirer.prompt([
+          const { _: isRestart } = await inquirer.prompt([
             {
               type: "confirm",
-              name: "restart",
+              name: "_",
               message: "Do you want to restart this file?",
             },
           ]);

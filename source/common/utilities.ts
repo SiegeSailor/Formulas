@@ -55,10 +55,10 @@ export const inquire = {
   ) => {
     try {
       const arrayOfFile = readdirSync(join(process.cwd(), path));
-      const { procedure: index } = await inquirer.prompt([
+      const { _: index } = await inquirer.prompt([
         {
           type: "rawlist",
-          name: "procedure",
+          name: "_",
           message,
           choices: arrayOfFile.map((foldername, index) => {
             return {

@@ -12,7 +12,7 @@ async function main(message = "What do you want to do?") {
     .prompt([
       {
         type: "list",
-        name: ENames.Purpose,
+        name: "_",
         message,
         choices: [
           { name: EChoices.Demonstrate },
@@ -21,7 +21,7 @@ async function main(message = "What do you want to do?") {
         ],
       },
     ])
-    .then(async ({ [ENames.Purpose]: purpose }) => {
+    .then(async ({ _: purpose }) => {
       switch (purpose) {
         case EChoices.Demonstrate:
           await inquire.procedure(

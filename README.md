@@ -2,6 +2,16 @@
 
 Provide a collection of formula functions and a command line tool.
 
+- [Formulas](#formulas)
+  - [Origin](#origin)
+  - [Prerequisites](#prerequisites)
+  - [Instructions](#instructions)
+    - [Start](#start)
+    - [Test](#test)
+      - [Issues](#issues)
+  - [Algorithms](#algorithms)
+  - [Encryption Flows](#encryption-flows)
+
 ## Origin
 
 This package was originally a project for class **MET CS 789 Cryptography** at Boston University, instructed by **Geoffrey Pascoe**. Student Zhang, Jin Yu (siege@bu.edu / siegesailor@gmail.com) created this as a codebase to demonstrate the algorithms and encryption flows, and then found out it was pleasant to develop such a useful package.
@@ -83,3 +93,22 @@ module.exports = {
     maxWorkers: 1,
 };
 ```
+
+## Algorithms
+
+- Baby Step Giant Step
+- Blum Blum Shub
+- Chinese Remainder
+- Euclidean
+- Extended Euclidean
+- Fast Modular Exponentiation
+- Miller Rabin Primarily Test
+- Multiplicative Inverse
+- Naor Reingo
+- Pollard P-1 Factorization
+- Primitive Root Search
+
+## Encryption Flows
+
+- RSA
+- ElGamal

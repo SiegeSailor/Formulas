@@ -1,5 +1,10 @@
+import chalk from "chalk";
+import inquirer from "inquirer";
+
 import { _ as euclidean } from "../euclidean";
 import { _ as fastModularExponentiation } from "../fast-modular-exponentiation";
+import { log } from "../../common/utilities";
+import { ESymbols } from "../../common/constants";
 
 export function _(generator: bigint, base: bigint, modulo: bigint) {
   if (modulo <= 1) throw new Error("Given modulo must be higher than 1");
@@ -32,4 +37,35 @@ export function _(generator: bigint, base: bigint, modulo: bigint) {
   }
 
   return BigInt(-1);
+}
+
+export async function prompt() {
+  console.log(`\tgenerator^x ${ESymbols.Congruent} base % modulo. x = result`);
+  console.log(chalk.gray(`\t92^x ${ESymbols.Congruent} 13 % 5. x = 3`));
+
+  const { generator, base, modulo } = await inquirer.prompt([
+    {
+      type: "number",
+      name: "generator",
+      message: `Enter ${chalk.italic("generator")}:`,
+      default: 1,
+    },
+    {
+      type: "number",
+      name: "base",
+      message: `Enter ${chalk.italic("base")}:`,
+      default: 1,
+    },
+    {
+      type: "number",
+      name: "modulo",
+      message: `Enter ${chalk.italic("modulo")}:`,
+      default: 2,
+    },
+  ]);
+
+  const x = _(BigInt(generator), BigInt(base), BigInt(modulo));
+  log.highlight(
+    `\t${generator}^x ${ESymbols.Congruent} ${base} % ${modulo}. x = ${x}`
+  );
 }

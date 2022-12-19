@@ -27,13 +27,13 @@ export async function prompt() {
       type: "number",
       name: "left",
       message: `Enter ${chalk.italic("left")}:`,
-      default: BigInt(1),
+      default: 1,
     },
     {
       type: "number",
       name: "right",
       message: `Enter ${chalk.italic("right")}:`,
-      default: BigInt(1),
+      default: 1,
     },
   ]);
 

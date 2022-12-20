@@ -1,0 +1,26 @@
+name: Develop
+
+on: [push, pull_request]
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - "19"
+          - "18"
+          - "17"
+          - "16"
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v3
+      - name: Install packages from NPM
+        run: npm ci
+      - name: Run unit tests
+        run: npm run test

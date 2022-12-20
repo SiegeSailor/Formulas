@@ -7,12 +7,19 @@ export default class Procedure {
   public run: () => Promise<void>;
 
   constructor(name: string, callback: () => Promise<void>) {
+    const wrap = async () => {
+      console.time(chalk.bold("\tTime consumed"));
+      await callback();
+      console.timeEnd(chalk.bold("\tTime consumed"));
+    };
+
     this.run = async function () {
       try {
         console.log(
           chalk.bgCyan.bold(`\n ${ESymbols.ArrowDownloadBottom} ${name} `)
         );
-        await callback();
+        await wrap();
+
         while (true) {
           const { _: isRestart } = await inquirer.prompt([
             {
@@ -21,7 +28,7 @@ export default class Procedure {
               message: "Do you want to restart this procedure?",
             },
           ]);
-          if (isRestart) await callback();
+          if (isRestart) await wrap();
           else break;
         }
         console.log(

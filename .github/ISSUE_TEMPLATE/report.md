@@ -1,13 +1,12 @@
 ---
 name: Report
 about: Please fill up the information fields as much as you can.
-title: ''
+title: ""
 labels: bug
 assignees: SiegeSailor
-
 ---
 
-# Decription
+# Description
 
 A clear and concise description of what the bug is.
 

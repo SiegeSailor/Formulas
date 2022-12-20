@@ -18,7 +18,7 @@ export default class Procedure {
             {
               type: "confirm",
               name: "_",
-              message: "Do you want to restart this file?",
+              message: "Do you want to restart this procedure?",
             },
           ]);
           if (isRestart) await callback();
@@ -27,7 +27,7 @@ export default class Procedure {
         console.log(
           chalk.bgCyan.bold(` ${ESymbols.ArrowDownloadTop} ${name} `)
         );
-        console.log(chalk.gray("Going back to the main menu.\n"));
+        console.log(chalk.gray("Going back to the previous menu.\n"));
       } catch (error) {
         throw error;
       }

@@ -1,6 +1,26 @@
 # Formulas
 
-Provide a collection of formula functions and a command line tool.
+Provide a collection of formula functions and a command line tool. File structure:
+
+```
+├── images/
+├── patches/
+├── source/
+│   ├── algorithms/
+│   │   ├── baby-step-giant-step/
+│   │   └── ...
+│   ├── common/
+│   │   ├── constants/
+│   │   ├── utilities/
+│   │   └── ...
+│   ├── illustration/
+│   │   ├── ElGamal.ts
+│   │   └── ...
+│   ├── types/
+│   ├── command.ts
+│   └── entry-point.ts
+└── README.md
+```
 
 - [Formulas](#formulas)
   - [Origin](#origin)

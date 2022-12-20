@@ -1,10 +1,9 @@
 ---
 name: Proposal
 about: Suggest an idea for this project.
-title: ''
+title: ""
 labels: proposal
 assignees: SiegeSailor
-
 ---
 
 # Description

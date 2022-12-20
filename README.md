@@ -96,8 +96,8 @@ module.exports = {
 
 ## Algorithms
 
-- Baby Step Giant Step
-- Blum Blum Shub
+- [Baby Step Giant Step](./source/algorithms/baby-step-giant-step/)
+- [Blum Blum Shub](./source//algorithms//blum-blum-shub/)
 - Chinese Remainder
 - Euclidean
 - Extended Euclidean

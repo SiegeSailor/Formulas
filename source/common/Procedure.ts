@@ -8,9 +8,11 @@ export default class Procedure {
 
   constructor(name: string, callback: () => Promise<void>) {
     const wrap = async () => {
-      console.time(chalk.bold("\tTime consumed"));
+      const timestamp = Date.now().toString(36).toUpperCase();
+      console.log(chalk.bold(`\tProcedure identifier: ${timestamp}`));
+      console.time(chalk.bold(`\tTime consumed for ${timestamp}`));
       await callback();
-      console.timeEnd(chalk.bold("\tTime consumed"));
+      console.timeEnd(chalk.bold(`\tTime consumed for ${timestamp}`));
     };
 
     this.run = async function () {

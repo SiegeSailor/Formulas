@@ -16,7 +16,7 @@ export async function prompt() {
     );
 
     const [p, q, n, r] = await inquire.continue(
-      `${EActors.Alice} is going to pick prime numbers P and Q:`,
+      `${EActors.Alice} is going to pick prime numbers P and Q, and then generate n with P * Q, r with (P - 1) * (Q - 1):`,
       () => {
         const [p, q] = wrap.randomize(16, 5, 2);
 
@@ -26,7 +26,7 @@ export async function prompt() {
           { name: "P", value: p },
           { name: "Q", value: q },
           { name: "n", value: n },
-          { name: "r", value: r },
+          { name: "r ((P - 1) * (Q - 1))", value: r },
         ]);
 
         return [p, q, n, r];
@@ -58,9 +58,7 @@ export async function prompt() {
     );
 
     await inquire.continue(
-      `${EActors.Alice} sends ${chalk.bold.bgCyan(
-        "(e, n)"
-      )} as the public key to ${EActors.Bob} and ${EActors.Eve}.`,
+      `${EActors.Alice} sends e and n as the public key to ${EActors.Bob} and ${EActors.Eve}.`,
       () => {
         console.log(`\t${EActors.Alice} has the following numbers:`);
         log.list([

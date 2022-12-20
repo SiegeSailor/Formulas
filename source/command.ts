@@ -3,7 +3,7 @@ import InquirerPluginPressToContinue from "inquirer-press-to-continue";
 import chalk from "chalk";
 
 import { format, inquire } from "./common/utilities";
-import { ENames, EChoices } from "./common/constants";
+import { EChoices } from "./common/constants";
 
 inquirer.registerPrompt("press-to-continue", InquirerPluginPressToContinue);
 

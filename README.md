@@ -1,26 +1,6 @@
 # Formulas
 
-Provide a collection of formula functions and a command line tool. File structure:
-
-```
-├── images/
-├── patches/
-├── source/
-│   ├── algorithms/
-│   │   ├── baby-step-giant-step/
-│   │   └── ...
-│   ├── common/
-│   │   ├── constants/
-│   │   ├── utilities/
-│   │   └── ...
-│   ├── illustration/
-│   │   ├── ElGamal.ts
-│   │   └── ...
-│   ├── types/
-│   ├── command.ts
-│   └── entry-point.ts
-└── README.md
-```
+Provide a collection of formula functions and a command line tool.
 
 - [Formulas](#formulas)
   - [Origin](#origin)
@@ -48,6 +28,28 @@ See `engines` in [package.json](./package.json):
 ```
 
 ## Instructions
+
+File structure:
+
+```
+├── images/
+├── patches/
+├── source/
+│   ├── algorithms/
+│   │   ├── baby-step-giant-step/
+│   │   └── ...
+│   ├── common/
+│   │   ├── constants/
+│   │   ├── utilities/
+│   │   └── ...
+│   ├── illustration/
+│   │   ├── ElGamal.ts
+│   │   └── ...
+│   ├── types/
+│   ├── command.ts
+│   └── entry-point.ts
+└── README.md
+```
 
 Use the following commands to help you to run or develop this project locally:
 

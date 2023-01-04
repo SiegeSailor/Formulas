@@ -1,3 +1,8 @@
+import chalk from "chalk";
+import inquirer from "inquirer";
+
+import { ESymbols } from "../../common/constants";
+
 export function _(base: bigint, exponent: bigint, modulo: bigint): bigint {
   const recursion = (
     base: bigint,
@@ -18,4 +23,9 @@ export function _(base: bigint, exponent: bigint, modulo: bigint): bigint {
   };
 
   return recursion(base, exponent, BigInt(1), modulo);
+}
+
+export async function prompt() {
+  console.log(`\tbase^exponent % modulo ${ESymbols.Congruent} x. x = result`);
+  console.log(chalk.gray(`\t2^100 % 71 ${ESymbols.Congruent} 20. x = 20`));
 }

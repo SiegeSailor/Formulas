@@ -4,7 +4,9 @@ import inquirer from "inquirer";
 import { _ as millerRabinPrimarilyTest } from "../miller-rabin-primarily-test";
 
 export function _(seed: number, bits: number) {
-  if (bits <= 0) throw new Error("Given bits must be higher than 0.");
+  if (seed <= 0 || bits <= 0)
+    throw new Error("Given parameters must be higher than 0.");
+
   const p = generatePrime(bits, 3, 4, 5000);
   const q = generatePrime(bits, 3, 4, 5000);
   const n = p * q;

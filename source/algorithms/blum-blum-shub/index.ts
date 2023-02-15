@@ -2,15 +2,16 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 
 import { _ as millerRabinPrimarilyTest } from "../miller-rabin-primarily-test";
+import { _ as pollardRho } from "../pollard-rho";
 
 export function _(seed: number, bits: number) {
   if (seed <= 0 || bits <= 0)
     throw new Error("Given parameters must be higher than 0.");
 
-  const p = generatePrime(bits, 3, 4, 5000);
-  const q = generatePrime(bits, 3, 4, 5000);
-  const n = p * q;
-  let x = BigInt(seed) % n;
+  const p = generatePrime(bits, 3, 4, bits * 1000);
+  const q = generatePrime(bits, 3, 4, bits * 1000);
+  const product = p * q;
+  let x = BigInt(seed) % product;
 
   function generatePrime(
     bits: number,
@@ -27,10 +28,20 @@ export function _(seed: number, bits: number) {
       ) {
         return candidate;
       }
+      const factor = pollardRho(candidate);
+      if (factor !== candidate && factor !== 1n) {
+        const z = factor;
+        const a = candidate / z;
+        if (z < a) {
+          return a;
+        } else {
+          return z;
+        }
+      }
       iterations++;
     }
     throw new Error(
-      `Failed to generate prime after ${maxIterations} iterations`
+      `Failed to generate prime after ${maxIterations} iterations.`
     );
   }
 
@@ -43,8 +54,8 @@ export function _(seed: number, bits: number) {
   }
 
   return () => {
-    x = (x * x) % n;
-    return x / n;
+    x = (x * x) % product;
+    return x / product;
   };
 }
 

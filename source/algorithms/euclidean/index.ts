@@ -2,10 +2,12 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 
 export function _(left: bigint, right: bigint): bigint {
-  const remainder = left % right;
-  if (left % right === BigInt(0)) return BigInt(right);
-
-  return _(right, remainder);
+  while (right !== BigInt(0)) {
+    const cache = right;
+    right = left % right;
+    left = cache;
+  }
+  return left;
 }
 
 export async function prompt() {

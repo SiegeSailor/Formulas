@@ -9,7 +9,7 @@ describe("Generate pseudo random numbers", () => {
     )}-bit random number\n\tis smaller or equal to its base-10 value`,
     (bits) => {
       expect(
-        blumBlumShub(bits)() <= BigInt(Math.pow(2, bits) * Math.pow(2, bits))
+        blumBlumShub(1, bits)() <= BigInt(Math.pow(2, bits) * Math.pow(2, bits))
       ).toBeTruthy();
     }
   );

@@ -89,9 +89,10 @@ export const inquire = {
 export const wrap = {
   randomize: (bits: number, level: number, count: number) => {
     const arrayOfPrime: bigint[] = [];
+    const generator = blumBlumShub(1, bits);
 
     while (arrayOfPrime.length != count) {
-      const numberPseudoRandom = blumBlumShub(bits)();
+      const numberPseudoRandom = generator();
       if (millerRabinPrimarilyTest(numberPseudoRandom, level))
         arrayOfPrime.push(numberPseudoRandom);
     }

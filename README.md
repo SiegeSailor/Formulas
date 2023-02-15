@@ -118,6 +118,8 @@ module.exports = {
 
 ## Algorithms
 
+Available mathematic algorithm implantation:
+
 - [Baby Step Giant Step](./source/algorithms/baby-step-giant-step/)
 - [Blum Blum Shub](./source//algorithms//blum-blum-shub/)
 - [Chinese Remainder](./source/algorithms/chinese-remainder/)
@@ -128,9 +130,12 @@ module.exports = {
 - [Multiplicative Inverse](./source/algorithms/multiplicative-inverse/)
 - [Naor Reingo](./source/algorithms/naor-reingo/)
 - [Pollard P-1 Factorization](./source/algorithms/pollard-p-1-factorization/)
+- [Pollard Rho](./source/algorithms/pollard-rho/)
 - [Primitive Root Search](./source/algorithms/primitive-root-search/)
 
 ## Encryption Flows
+
+Demonstrable command-line based encryption flow with three parties involved:
 
 - [RSA](./source/illustration/RSA.ts)
 - [ElGamal](./source/illustration/ElGamal.ts)

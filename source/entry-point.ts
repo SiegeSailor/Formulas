@@ -8,4 +8,5 @@ export { _ as millerRabinPrimarilyTest } from "./algorithms/miller-rabin-primari
 export { _ as multiplicativeInverse } from "./algorithms/multiplicative-inverse";
 export { _ as naorReingo } from "./algorithms/naor-reingo";
 export { _ as pollardP1Factorization } from "./algorithms/pollard-p-1-factorization";
+export { _ as pollardRho } from "./algorithms/pollard-rho";
 export { _ as primitiveRootSearch } from "./algorithms/primitive-root-search";

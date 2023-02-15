@@ -7,6 +7,12 @@ import { join } from "path";
 import { blumBlumShub, millerRabinPrimarilyTest } from "../entry-point";
 import Procedure from "./Procedure";
 
+export const math = {
+  absolute: (input: bigint) => {
+    return input < BigInt(0) ? -input : input;
+  },
+};
+
 export const format = {
   foldername: (foldername: string) => {
     return foldername

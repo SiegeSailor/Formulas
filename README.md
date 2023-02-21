@@ -1,6 +1,6 @@
 # Formulas
 
-Provide a collection of formula functions and a command line tool.
+Provides a collection of cryptography-related functions for software developers and a command line tool with interactive prompts to demonstrate key encryption flows and algorithms.
 
 - [Formulas](#formulas)
   - [Origin](#origin)

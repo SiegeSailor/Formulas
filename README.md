@@ -3,7 +3,6 @@
 Provides a collection of cryptography functions and a command line tool with interactive prompts to demonstrate key encryption flows and algorithms.
 
 - [Formulas](#formulas)
-  - [Origin](#origin)
   - [Prerequisites](#prerequisites)
   - [Instructions](#instructions)
     - [Start](#start)
@@ -11,10 +10,6 @@ Provides a collection of cryptography functions and a command line tool with int
       - [Issues](#issues)
   - [Algorithms](#algorithms)
   - [Encryption Flows](#encryption-flows)
-
-## Origin
-
-This package was originally a project for class **MET CS 789 Cryptography** at Boston University, instructed by **Geoffrey Pascoe**. Student Zhang, Jin Yu (siege@bu.edu / siegesailor@gmail.com) created this as a codebase to demonstrate the algorithms and encryption flows, and then found out it was pleasant to develop such a useful package.
 
 ## Prerequisites
 

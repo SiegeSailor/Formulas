@@ -95,7 +95,7 @@ export const inquire = {
 export const wrap = {
   randomize: (bits: number, level: number, count: number) => {
     const arrayOfPrime: bigint[] = [];
-    const generator = blumBlumShub(1, bits);
+    const generator = blumBlumShub(bits);
 
     while (arrayOfPrime.length != count) {
       const numberPseudoRandom = generator();
